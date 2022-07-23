@@ -21,11 +21,4 @@ class MortgageViewSet(ViewSet):
             return Response(mortgage_data)
 
 
-    # def list(self, request):
-    #     serializer = MortgageSerializer(data=request.data)
-    #     price = int(serializer.validated_data.get("price"))
-    #     initial_fee = int(serializer.validated_data.get("initial_fee"))
-    #     term = int(serializer.validated_data.get("term"))
-    #     return Response(payment_formula(price=price, initial_fee=initial_fee, term=term))
-
 

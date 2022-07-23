@@ -1,5 +1,4 @@
 import random
-import json
 from .models import Mortgage
 
 
@@ -21,8 +20,6 @@ def get_mortgage_list(price, initial_fee, term):
         rate = round(i % 12, 1)
         formula = (credit_amount * rate) // (1 - (1 + rate) * (1 - term))
         mortgage_data.append(dict({'bank_name': _random_bank_name(), 'payment': int(formula), 'rate': float(rate)}), )
-    # json_data = json.dumps({'bank_name': _random_bank_name(), 'payment': str(formula), 'rate': str(rate)})
-    # print(mortgage_data)
     return mortgage_data
 
 

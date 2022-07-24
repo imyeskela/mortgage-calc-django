@@ -7,18 +7,46 @@ def _random_bank_name():
     return random.choice(bank_names)
 
 
-def get_mortgage_list(price, initial_fee, term):
-    credit_amount = price - initial_fee
+def _price_min(initial_fee):
+    if initial_fee < 5000000:
+        price_min = 4000000
+    else:
+        price_min = initial_fee + 2000000
+    return price_min
+
+
+def _random_rate():
+    return round(random.uniform(0.3, 15.7), 1)
+
+
+def _random_price(initial_fee):
+    price_min = _price_min(initial_fee)
+    prices = []
+    for i in range(price_min, 30000000, 3400000):
+        prices.append(i)
+
+    return random.choice(prices)
+
+
+def get_mortgage_list(initial_fee, term):
+
     i = 0.5
     mortgage_data = []
-    while i != 10.0:
+    while len(mortgage_data) != 15:
+        price = _random_price(initial_fee)
+        credit_amount = price - initial_fee
         if i >= 10.0:
             i = 0.5
             break
         i += 0.5
-        rate = round(i % 12, 1)
+        rate = _random_rate()
         formula = (credit_amount * rate) // (1 - (1 + rate) * (1 - term))
-        mortgage_data.append(dict({'bank_name': _random_bank_name(), 'payment': int(formula), 'rate': float(rate)}), )
+        mortgage_data.append(dict({
+            'bank_name': _random_bank_name(),
+            'payment': int(formula),
+            'rate': float(rate),
+            'price': price
+        }), )
     return mortgage_data
 
 

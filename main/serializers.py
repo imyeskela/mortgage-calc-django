@@ -15,7 +15,7 @@ BANK_NAME_CHOICES = (
 
 
 class MortgageSerializer(serializers.Serializer):
-    price = serializers.IntegerField()
+    # price = serializers.IntegerField()
     initial_fee = serializers.IntegerField()
     term = serializers.IntegerField()
     bank_name_filter = serializers.CharField(max_length=100, required=False, default=None)

@@ -17,9 +17,8 @@ class Profile(models.Model):
         User,
         on_delete=models.CASCADE
     )
-    mortgages = models.ForeignKey(
+    mortgages = models.ManyToManyField(
         Mortgage,
-        on_delete=models.CASCADE
     )
 
     def __str__(self):

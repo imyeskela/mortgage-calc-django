@@ -1,11 +1,13 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework import permissions
 
 from .serializers import MortgageSerializer
 from .services import get_mortgage_list, save_data, get_filtered_mortgages
 
 
 class MortgageViewSet(ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     def create(self, request):
         serializer = MortgageSerializer(data=request.data)
         if serializer.is_valid():

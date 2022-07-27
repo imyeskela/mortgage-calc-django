@@ -23,8 +23,8 @@ class MortgageViewSet(ViewSet):
                 rate_min_filter=rate_min_filter,
                 rate_max_filter=rate_max_filter
             )
-            print(filtered_data)
-            save_data(filtered_data)
+            # print(filtered_data)
+            save_data(filtered_data, request.user.email)
             return Response({'offers': len(filtered_data), 'data': filtered_data})
         else:
             return Response({'error': 'Data is not valid'})

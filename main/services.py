@@ -1,6 +1,8 @@
 import random
-from .models import Mortgage
+import uuid
 
+from .models import Mortgage
+from account.models import User
 
 def _random_bank_name():
     bank_names = ['SBER', 'VTB', 'RAIFEZENBANK', 'CITYBANK', 'DOICHEBANK', 'RNBANK']
@@ -28,6 +30,12 @@ def _random_price(initial_fee):
     return random.choice(prices)
 
 
+def _random_unique_uuid():
+    uuid_str = uuid.uuid4()
+    while uuid_str != Mortgage.objects.values_list('unique_num'):
+        return uuid_str
+
+
 def get_mortgage_list(initial_fee, term):
 
     i = 0.5
@@ -42,6 +50,7 @@ def get_mortgage_list(initial_fee, term):
         rate = _random_rate()
         formula = (credit_amount * rate) // (1 - (1 + rate) * (1 - term))
         mortgage_data.append(dict({
+            'unique_num': _random_unique_uuid(),
             'bank_name': _random_bank_name(),
             'payment': int(formula),
             'rate': float(rate),
@@ -75,7 +84,10 @@ def get_filtered_mortgages(mortgage_data, bank_name_filter, rate_min_filter, rat
         return mortgage_data
 
 
-def save_data(json_data):
+def save_data(json_data, email_user):
     for json_list in json_data:
         Mortgage.objects.create(**json_list)
-
+        mortgage = Mortgage.objects.filter(unique_num=json_list.get('unique_num'))
+        mortgage_id = list(mortgage.values_list('id', flat=True))[0]
+        User.objects.get(email=email_user).mortgage.add(mortgage_id)
+        # User.objects.filter(email=email_user).update(mortgage=mortgage.get('pk'))

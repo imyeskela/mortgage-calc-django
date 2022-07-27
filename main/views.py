@@ -1,11 +1,7 @@
-import random
-
-from django.shortcuts import render
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
 from .serializers import MortgageSerializer
-from .models import Mortgage
 from .services import get_mortgage_list, save_data, get_filtered_mortgages
 
 

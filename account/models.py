@@ -9,6 +9,10 @@ from main.models import Mortgage
 class User(AbstractUser):
     mortgage = models.ManyToManyField(Mortgage)
     email = models.EmailField('Email', unique=True)
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
     username = None
 
     USERNAME_FIELD = 'email'

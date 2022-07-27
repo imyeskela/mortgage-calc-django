@@ -12,14 +12,4 @@ class Mortgage(models.Model):
         return f'{self.bank_name}; Mortgage Rate: {self.rate}; Price: {self.price}'
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE
-    )
-    mortgages = models.ManyToManyField(
-        Mortgage,
-    )
 
-    def __str__(self):
-        return self.user.username

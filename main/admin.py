@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Mortgage, Profile
+from .models import Mortgage
 
 admin.site.register(Mortgage)
-admin.site.register(Profile)
